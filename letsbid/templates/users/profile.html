@@ -1,0 +1,58 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h2 class="mb-4">{{user.username}}</h2>
+        <p>{{user.profile.bio}}</p>
+
+        {% if user.profile.image %}
+            <img src="{{ user.profile.image.url}}" alt="isha" height="50%" width="50%" align="left">
+        {% endif %}
+        {% if user.profile.citizenship_image %}
+            <img src="{{ user.profile.citizenship_image.url}}" alt="isha" height="50%" width="50%" align="right">
+        {% endif %}
+        <h2 class="post-title">General Info</h2>
+                <ul>
+                    <li>
+                        <span>Firstname: </span> <span>{{user.first_name}}</span>
+                    </li>
+                    <li>
+                        <span>Lastname: </span>{{user.last_name}}
+                    </li>
+                    <li>
+                        <span>Date of Birth: </span>{{user.profile.birth_date}}
+                    </li>
+                    <li>
+                        <span>Location: </span>{{user.profile.location}}
+                    </li>
+                    <li>
+                        <span>E-mail: </span>{{user.email}}
+                    </li>
+                    <li>
+                        <span>Phone: </span>{{user.profile.phone_number}}
+                    </li>
+                    <li>
+                        <span>Identity No.: </span>{{user.profile.citizenship_number}}
+                    </li>
+                    <a class="btn btn-secondary" href="{% url 'edit_profile' %}">Edit Your Profile</a>
+                </ul>
+         </div>
+
+ {% for contract in user_posts %}
+    <div class="page-header">
+        <h2 class="mb-4"><a href="{% url 'contract-detail' contract.pk %}">{{ contract.contract_title }}</a></h2>
+                            <p class="post-meta">
+                        {{ contract.contract_details|truncatechars:250 }}
+                    </p>
+                    <p class="post-meta">Posted by
+                        <a href="{% url 'user-details' pk=contract.contract_creator.pk %}">{{ contract.contract_creator }}</a> on {{ contract.contract_date }}</p>
+                    <a class="btn btn-primary" href="{% url 'contract-detail' pk=contract.pk %}">Interested</a>
+                    <br>
+                    <hr>
+                    <br>
+    </div>
+{% endfor %}
+
+{% endblock %}
+
+

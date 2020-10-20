@@ -1,0 +1,38 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h2 class="mb-4">Contact us</h2>
+            <span class="subheading" style="text-align: center !important">If you have any confusion or queries, message us here <br><br>
+              <a class="btn btn-secondary" href="{% url 'create_message' %}">Send message</a>
+              <br><br> <strong>Note:</strong> Messages will be replied within 24hrs</span>
+    </div>
+    <br>
+    <h2 class="mb-4">Sent messages</h2>
+    {% for usermessage in user_messages %}
+    <div class="page-header">
+        <p class="mb-4"><strong>{{ usermessage.user_message }}</strong>
+            <br>
+            Send at: {{ usermessage.send_date }}
+        </p>
+
+                    <p>
+                        <strong>Reply: </strong><span>{{usermessage.admin_reply}}</span>
+                    </p>
+                    <hr>
+    </div>
+{% endfor %}
+
+{% if is_paginated %}
+    {% if page_obj.has_previous %}
+        <a class="btn btn-nang btn-rm-2 float-left" href="?page={{ page_obj.previous_page_number }}">&larr;Previous Posts </a>
+    {% endif %}
+    {% if page_obj.has_next %}
+    <a class="btn btn-nang btn-rm-2 float-right" href="?page={{ page_obj.next_page_number }}">Next Posts &rarr;</a>
+    {% endif %}
+{% endif %}
+
+{% endblock %}
+
+
+

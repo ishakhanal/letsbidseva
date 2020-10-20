@@ -1,0 +1,27 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+ {% for contract in blog_entries %}
+    <div class="page-header">
+        <h2 class="mb-4"><a href="{% url 'contract-detail' contract.pk %}">{{ contract.contract_title }}</a></h2>
+                            <p class="post-meta">
+                        {{ contract.contract_details|truncatechars:250 }}
+                    </p>
+                    <p class="post-meta">Posted by
+                        <a href="{% url 'user-details' pk=contract.contract_creator.pk %}">{{ contract.contract_creator }}</a> on {{ contract.contract_date }}</p>
+                    <a class="btn btn-primary" href="{% url 'contract-detail' pk=contract.pk %}">Interested</a>
+                    <br>
+                    <hr>
+                    <br>
+    </div>
+{% endfor %}
+
+{% if is_paginated %}
+    {% if page_obj.has_previous %}
+        <a class="btn btn-nang btn-rm-2 float-left" href="?page={{ page_obj.previous_page_number }}">&larr;Previous Posts </a>
+    {% endif %}
+    {% if page_obj.has_next %}
+    <a class="btn btn-nang btn-rm-2 float-right" href="?page={{ page_obj.next_page_number }}">Next Posts &rarr;</a>
+    {% endif %}
+{% endif %}
+{% endblock %}

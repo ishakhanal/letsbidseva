@@ -1,0 +1,18 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+ {% for contract in blog_entries %}
+    <div class="page-header">
+        <h1><a href="/">{{ contract.contract_title }}</a></h1>
+                            <p class="post-meta">
+                        {{ contract.contract_details|truncatechars:250 }}<a class="btn btn-link" href="{% url 'contract-detail' contract.pk %}">View Details &rarr;</a>
+                    </p>
+                    <p class="post-meta">Posted by
+                        <a href="{% url 'user-details' pk=contract.contract_creator.pk %}">{{ contract.contract_creator }}</a> on {{ contract.contract_date }}</p>
+                    <a class="btn btn-nang btn-rm mr-tp" href="{% url 'contract-detail' pk=contract.pk %}">Bids</a>
+                    <br>
+                    <hr>
+                    <br>
+    </div>
+    {% endfor %}
+{% endblock %}

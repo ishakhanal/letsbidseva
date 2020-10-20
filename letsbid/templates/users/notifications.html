@@ -1,0 +1,28 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h2 class="mb-4">Notifications</h2>
+        {% for notification in user_notifications %}
+        <ul>
+               <strong>{{ notification.admin_message }}</strong>
+            <p> Send at: {{ notification.notification_date }}</p>
+        </ul>
+        <hr>
+        {% endfor %}
+    </div>
+
+{% if is_paginated %}
+    {% if page_obj.has_previous %}
+        <a class="btn btn-nang btn-rm-2 float-left" href="?page={{ page_obj.previous_page_number }}">&larr;Previous Posts </a>
+    {% endif %}
+    {% if page_obj.has_next %}
+    <a class="btn btn-nang btn-rm-2 float-right" href="?page={{ page_obj.next_page_number }}">Next Posts &rarr;</a>
+    {% endif %}
+{% endif %}
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,60 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+<h2 class="mb-4">{{ object.contract_title }}</h2>
+<p>
+    {{ object.contract_details|linebreaks }}
+</p>
+<p class="post-meta">Deadline: {{ object.contract_deadline }}</p>
+   <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-preview">
+                    {% if object.contract_image1 %}
+                    <img src="{{ object.contract_image1.url }}" alt="isha" height="50%" width="50%" align="left">
+                    {% endif %}
+                    {% if object.contract_image2 %}
+                    <img src="{{ object.contract_image2.url }}" alt="isha" height="50%" width="50%" align="right">
+                    <div style="clear: both"></div>
+                    {% endif %}
+                    <br>
+                    {% if object.contract_doc %}
+                    <center><a class="btn btn-secondary" href="{{ object.contract_doc.url }}" type="application/octet-stream .pdf" download="menu.pdf" target="_blank" role="button">Download pdf</a></center>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+<hr>
+<p class="post-meta">Posted by <a href="{% url 'user-details' pk=object.contract_creator.pk %}" class="nang-a"> {{ object.contract_creator }}</a> on {{object.contract_date }}</p><br> {% if object.compdate %}
+<h4 class="mb-4">Bidding Closed</h4>
+        {% else %}
+    <a href="{% url 'add_comment_to_post' pk=contract.pk %}" class="btn btn-primary">Show Interest</a>
+        {% endif %}
+
+<hr>
+<br>
+{% if object.compdate %}
+{% for comment in contract.comments.all %}
+                    <h2 class="mb-4"><a>
+              	{{ comment.author }} </a>
+                    </h2>
+                    <p class="post-meta">
+                        {{ comment.text|linebreaks }}
+                    </p>
+                    <p class="post-meta">
+                        on {{ comment.created_date }}</p>
+                    <hr>
+                    <br>
+
+    {% empty %}
+    <h4 class="mb-4">Sorry! no feedback</h4>
+    {% endfor %}
+    {% else %}
+
+<center>
+    <h4 class="mb-4"> Wait for the deadline to view the feedback in this post </h4>
+</center>
+    {% endif %}
+
+{% endblock %}

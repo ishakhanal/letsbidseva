@@ -1,0 +1,25 @@
+{% extends 'entries/base.html' %}
+
+{% block content %}
+
+ {% for contract in blog_entries %}
+
+    <div class="page-header">
+        {% if contract.category == '4' %}
+        <h2 class="mb-4"><a href="{% url 'contract-detail' contract.pk %}">{{ contract.contract_title }}</a></h2>
+                            <p class="post-meta">
+                        {{ contract.contract_details|truncatechars:250 }}
+                    </p>
+                    <p class="post-meta">Posted by
+                        <a href="{% url 'user-details' pk=contract.contract_creator.pk %}">{{ contract.contract_creator }}</a> on {{ contract.contract_date }}</p>
+                    <a class="btn btn-primary" href="{% url 'contract-detail' pk=contract.pk %}">Interested</a>
+                    <br>
+                    <hr>
+                    <br>
+        {% endif %}
+    </div>
+
+
+{% endfor %}
+
+{% endblock %}
